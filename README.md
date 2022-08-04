@@ -9,15 +9,18 @@ Some filters have multiple options which can be accessed by right clicking the f
 * Inventory Items - Filter by current inventory or equipped items.
 * Recent Items - Filter by recently viewed items or recent buy/sell offers.
 
-**Configuring**
+**More Info**
 
 You can enable/disable each filter in the config menu.
 
+The recent items filter will only keep track of your recent items when turned on.
+
 By default, every bank tag is included in the Bank Tags filter. To include/exclude tags in the filter you can right click the tag in the bank interface and select the corresponding menu option.
+
 
 **Compatability**
 
-This plugin is fully compatible with Quest Helper's quest item filter.
+This plugin is fully compatible with the Grand Exchange plugin and Quest Helper's quest item filter.
 
 **Filter Examples**
 

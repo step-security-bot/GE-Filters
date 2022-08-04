@@ -26,7 +26,10 @@ import java.util.List;
 
 @Slf4j
 @PluginDescriptor(
-	name = "GE Filters"
+	name = "GE Filters",
+	description = "Search filters for the Grand Exchange.",
+	tags = {"ge","filter","grand","exchange","search","bank","tag"},
+	enabledByDefault = true
 )
 public class GEFiltersPlugin extends Plugin
 {
