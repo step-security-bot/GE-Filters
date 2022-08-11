@@ -140,7 +140,7 @@ public class GEFiltersPlugin extends Plugin
 
 	private void startFilters()
 	{
-		final int horizontalSpacing = config.filterHorizontalSpacing();
+		final int horizontalSpacing = SearchFilter.ICON_SIZE + config.filterHorizontalSpacing();
 		int xOffset = 0;
 
 		for (SearchFilter filter : filters)

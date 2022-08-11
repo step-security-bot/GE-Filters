@@ -28,13 +28,13 @@ import java.util.List;
 
 public abstract class SearchFilter
 {
+    public static final int ICON_SIZE = 20;
     private static final String CLEAR_FILTER_OPTION = "Clear Filter";
     private static final String QUEST_HELPER_COMP_WIDGET_NAME = "quest helper";
     private static final String QUEST_HELPER_COMP_NAME = "Quest Helper";
     private static final String QUEST_HELPER_FILTER_OPTION = "View missing items";
     private static final int FILTER_TOGGLE_SOUND_ID = SoundEffectID.UI_BOOP;
     private static final int KEY_PRESS_SCRIPT_ID = 905;
-    private static final int ICON_SIZE = 20;
     private static final int ICON_BG_SIZE_OFFSET = 6;
     private static final int ICON_BG_POS_OFFSET = 3;
     private boolean qhEnabled;

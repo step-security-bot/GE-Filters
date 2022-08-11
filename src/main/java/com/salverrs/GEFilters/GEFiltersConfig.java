@@ -83,8 +83,8 @@ public interface GEFiltersConfig extends Config
 	}
 
 	@Range(
-			max = 40,
-			min = 20
+			max = 20,
+			min = 0
 	)
 	@ConfigItem(
 			keyName = "filterHorizontalSpacing",
@@ -95,7 +95,7 @@ public interface GEFiltersConfig extends Config
 	)
 	default int filterHorizontalSpacing()
 	{
-		return 25;
+		return 5;
 	}
 
 
