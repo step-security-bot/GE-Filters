@@ -10,6 +10,8 @@ import com.salverrs.GEFilters.Filters.RecentItemsSearchFilter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.*;
 import net.runelite.api.events.*;
+import net.runelite.api.widgets.Widget;
+import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.EventBus;
@@ -37,7 +39,6 @@ public class GEFiltersPlugin extends Plugin
 	public static final String CONFIG_GROUP_DATA = "GE_FILTERS_CONFIG_DATA";
 	public static final String BANK_TAGS_COMP_NAME = "Bank Tags";
 	private static final int SEARCH_BOX_LOADED_ID = 750;
-	private static final int FILTER_X_GAP = 30;
 
 	@Inject
 	private Client client;
@@ -64,14 +65,19 @@ public class GEFiltersPlugin extends Plugin
 	protected void startUp() throws Exception
 	{
 		log.info("GE Filters started!");
-		loadFilters();
+		clientThread.invoke(() ->
+		{
+			loadFilters();
+			tryStartFilters();
+		});
 	}
 
 	@Override
 	protected void shutDown() throws Exception
 	{
 		log.info("GE Filters stopped!");
-		clientThread.invoke(() -> {
+		clientThread.invoke(() ->
+		{
 			stopFilters();
 		});
 	}
@@ -81,7 +87,10 @@ public class GEFiltersPlugin extends Plugin
 	{
 		if (event.getScriptId() == SEARCH_BOX_LOADED_ID)
 		{
-			startFilters();
+			clientThread.invoke(() ->
+			{
+				tryStartFilters();
+			});
 		}
 	}
 
@@ -91,9 +100,11 @@ public class GEFiltersPlugin extends Plugin
 		if (!configChanged.getGroup().equals(GEFiltersPlugin.CONFIG_GROUP))
 			return;
 
-		clientThread.invoke(() -> {
+		clientThread.invoke(() ->
+		{
 			stopFilters();
 			loadFilters();
+			tryStartFilters();
 		});
 	}
 
@@ -119,13 +130,23 @@ public class GEFiltersPlugin extends Plugin
 		registerFilterEvents();
 	}
 
+	private void tryStartFilters()
+	{
+		if (isSearchVisible())
+		{
+			startFilters();
+		}
+	}
+
 	private void startFilters()
 	{
+		final int horizontalSpacing = config.filterHorizontalSpacing();
 		int xOffset = 0;
+
 		for (SearchFilter filter : filters)
 		{
 			filter.start(xOffset, 0);
-			xOffset += FILTER_X_GAP;
+			xOffset += horizontalSpacing ;
 		}
 	}
 
@@ -168,6 +189,12 @@ public class GEFiltersPlugin extends Plugin
 		}
 
 		return false;
+	}
+
+	private boolean isSearchVisible()
+	{
+		final Widget widget = client.getWidget(WidgetInfo.CHATBOX_GE_SEARCH_RESULTS);
+		return widget != null && !widget.isHidden();
 	}
 
 	@Provides

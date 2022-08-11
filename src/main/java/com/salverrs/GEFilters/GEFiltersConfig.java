@@ -1,9 +1,6 @@
 package com.salverrs.GEFilters;
 
-import net.runelite.client.config.Config;
-import net.runelite.client.config.ConfigGroup;
-import net.runelite.client.config.ConfigItem;
-import net.runelite.client.config.ConfigSection;
+import net.runelite.client.config.*;
 
 import java.awt.*;
 
@@ -83,6 +80,22 @@ public interface GEFiltersConfig extends Config
 	default boolean keyPressOverridesFilter()
 	{
 		return true;
+	}
+
+	@Range(
+			max = 40,
+			min = 20
+	)
+	@ConfigItem(
+			keyName = "filterHorizontalSpacing",
+			name = "Horizontal Spacing",
+			description = "The horizontal space between filter buttons (px).",
+			section = preferencesSection,
+			position = 5
+	)
+	default int filterHorizontalSpacing()
+	{
+		return 25;
 	}
 
 
