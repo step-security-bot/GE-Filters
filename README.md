@@ -31,6 +31,5 @@ This plugin is fully compatible with the Grand Exchange plugin and Quest Helper'
 
 **Filter Examples**
 
-![banktags](https://user-images.githubusercontent.com/109300410/182886028-86c09adf-0142-49fa-aeb4-403331ba8fef.png)
-![recent](https://user-images.githubusercontent.com/109300410/182886015-0253a768-b134-492f-9062-c9f7cd9c144b.png)
-
+![banktabs-1](https://user-images.githubusercontent.com/109300410/184133374-8732ec19-32f6-4728-9250-f91186807a02.png)
+![recent-1](https://user-images.githubusercontent.com/109300410/184133386-bf413f86-f4fe-499d-8f1d-bf1f45c1781a.png)
