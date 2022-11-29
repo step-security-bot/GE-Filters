@@ -74,6 +74,9 @@ public abstract class SearchFilter
         if (isSearchHidden())
             return;
 
+        if (!ready)
+            onFilterInitialising();
+
         onFilterStarted();
 
         checkQuestHelperState();
@@ -131,7 +134,7 @@ public abstract class SearchFilter
         {
             resolveQuestHelperFilterState();
             FilterOption option = filterTitleMap.get(optionClicked);
-            enableFilter(option, false);
+            enableFilter(option, false, true);
         }
 
         client.playSoundEffect(FILTER_TOGGLE_SOUND_ID);
@@ -187,6 +190,8 @@ public abstract class SearchFilter
         disableFilter(true);
         searchGE(character, false);
     }
+
+    protected abstract void onFilterInitialising();
 
     protected abstract void onFilterStarted();
 
@@ -300,7 +305,7 @@ public abstract class SearchFilter
         }
     }
 
-    private void enableFilter(FilterOption option, boolean silent)
+    private void enableFilter(FilterOption option, boolean silent, boolean clearData)
     {
         if (!ready)
             return;
@@ -315,6 +320,11 @@ public abstract class SearchFilter
             searchGE(option.getSearchValue());
         }
 
+        if (clearData)
+        {
+            option.setData(null);
+        }
+
         lastOptionActivated = option;
         eventBus.post(new OtherFilterOptionActivated(this, option));
     }
@@ -327,6 +337,8 @@ public abstract class SearchFilter
         filterEnabled = false;
         refreshFilterMenuOptions(false);
         resetPreviousSearchState();
+
+        filterTitleMap.values().forEach(f -> f.setData(null));
 
         clientThread.invokeLater(() -> {
             setWidgetActivationState(false, true);
@@ -346,12 +358,12 @@ public abstract class SearchFilter
         {
             if (hasPreviousSearchState())
             {
-                enableFilter(lastOptionActivated, true);
+                enableFilter(lastOptionActivated, true, false);
                 loadPreviousSearchState();
             }
             else
             {
-                enableFilter(lastOptionActivated, false);
+                enableFilter(lastOptionActivated, false, false);
             }
         }
         else

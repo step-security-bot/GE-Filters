@@ -25,21 +25,24 @@ public class BankTabSearchFilter extends SearchFilter {
     private static final int SPRITE_ID_MAIN = SpriteID.MAP_ICON_BANK;
     private static final String TITLE_MAIN = "Bank Tags";
     private static final String SEARCH_BASE_MAIN = "bank-tags";
-    private static final String TAG_TAB_MENU_IDENTIFIER = "tag tab";
+    private static final String TAG_TAB_MENU_IDENTIFIER = "Export tag tab";
     private static final String TAG_EXCEPTION_JSON_KEY = "bank-tags-exceptions";
     private boolean bankOpen = false;
     private FilterOption bankTabFilter;
     private List<String> tagExceptions = new ArrayList<>();
 
     @Override
+    protected void onFilterInitialising()
+    {
+        bankTabFilter = new FilterOption(TITLE_MAIN, SEARCH_BASE_MAIN);
+        setFilterOptions(bankTabFilter);
+        setIconSprite(SPRITE_ID_MAIN, -1);
+    }
+
+    @Override
     protected void onFilterStarted()
     {
         loadTagExceptions();
-
-        bankTabFilter = new FilterOption(TITLE_MAIN, SEARCH_BASE_MAIN);
-
-        setFilterOptions(bankTabFilter);
-        setIconSprite(SPRITE_ID_MAIN, -1);
     }
 
     @Override
@@ -70,7 +73,6 @@ public class BankTabSearchFilter extends SearchFilter {
             bankOpen = false;
         }
     }
-
 
     @Subscribe
     protected void onClientTick(ClientTick clientTick)
@@ -166,7 +168,7 @@ public class BankTabSearchFilter extends SearchFilter {
 
             searchResult.setTitleText(search);
             searchResult.setTooltipText(search);
-            searchResult.setIcon(filter.getIconItemId());
+            searchResult.setItemIcon(filter.getIconItemId());
             searchResult.setOnOpListener((JavaScriptCallback)(e) ->
             {
                 final String title = TITLE_MAIN + " - " + search;

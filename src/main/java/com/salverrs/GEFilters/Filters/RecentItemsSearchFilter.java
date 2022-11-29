@@ -33,7 +33,7 @@ public class RecentItemsSearchFilter extends SearchFilter {
     private ArrayList<Short> recentItemIds, recentBuyOffersItemIds, recentSellOffersItemIds;
 
     @Override
-    protected void onFilterStarted()
+    protected void onFilterInitialising()
     {
         loadRecentItems();
         loadRecentBuyOfferItems();
@@ -45,6 +45,14 @@ public class RecentItemsSearchFilter extends SearchFilter {
 
         setFilterOptions(recentlyViewed, recentBuyOffers, recentSellOffers);
         setIconSprite(SPRITE_ID_MAIN, 0);
+    }
+
+    @Override
+    protected void onFilterStarted()
+    {
+        loadRecentItems();
+        loadRecentBuyOfferItems();
+        loadRecentSellOfferItems();
     }
 
     @Override
