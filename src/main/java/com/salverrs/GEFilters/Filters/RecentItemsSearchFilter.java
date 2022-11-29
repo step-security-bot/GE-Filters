@@ -102,12 +102,12 @@ public class RecentItemsSearchFilter extends SearchFilter {
         if (event.getIndex() != VarPlayer.CURRENT_GE_ITEM.getId())
             return;
 
-        final short recentId = (short)client.getVar(VarPlayer.CURRENT_GE_ITEM);
+        final int recentId = client.getVarpValue(VarPlayer.CURRENT_GE_ITEM);
 
         if (recentId == -1 || recentId == 0)
             return;
 
-        appendToIdList(recentItemIds, recentId);
+        appendToIdList(recentItemIds, (short)recentId);
         saveRecentItems();
     }
 
