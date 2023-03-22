@@ -71,7 +71,7 @@ public abstract class SearchFilter
 
     public void start(int xOffset, int yOffset)
     {
-        if (isSearchHidden())
+        if (isChatInputHidden())
             return;
 
         if (!ready)
@@ -178,6 +178,9 @@ public abstract class SearchFilter
             return;
 
         if (event.getScriptId() != KEY_PRESS_SCRIPT_ID)
+            return;
+
+        if (!isItemSearchInput())
             return;
 
         final ScriptEvent scriptEvent = event.getScriptEvent();
@@ -458,10 +461,19 @@ public abstract class SearchFilter
         client.runScript(filterArgs);
     }
 
-    private boolean isSearchHidden()
+    private boolean isChatInputHidden()
     {
         final Widget widget = client.getWidget(WidgetInfo.CHATBOX_CONTAINER);
         return widget == null || widget.isHidden();
+    }
+
+    private boolean isItemSearchInput() // Search title is hidden on search input but not for quantity inputs
+    {
+        if (isChatInputHidden())
+            return false;
+
+        final Widget title = client.getWidget(WidgetInfo.CHATBOX_TITLE);
+        return title != null && title.isHidden();
     }
 
     private void createWidgets(int xOffset, int yOffset)

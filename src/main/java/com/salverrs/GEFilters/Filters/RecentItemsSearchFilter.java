@@ -99,7 +99,7 @@ public class RecentItemsSearchFilter extends SearchFilter {
         if (!ready)
             return;
 
-        if (event.getIndex() != VarPlayer.CURRENT_GE_ITEM.getId())
+        if (event.getVarpId() != VarPlayer.CURRENT_GE_ITEM)
             return;
 
         final int recentId = client.getVarpValue(VarPlayer.CURRENT_GE_ITEM);
