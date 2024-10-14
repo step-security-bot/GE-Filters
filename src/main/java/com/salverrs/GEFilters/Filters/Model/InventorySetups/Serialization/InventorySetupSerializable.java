@@ -2,9 +2,12 @@
 
 package com.salverrs.GEFilters.Filters.Model.InventorySetups.Serialization;
 
-import com.salverrs.GEFilters.Filters.Model.InventorySetups.*;
-
+import com.salverrs.GEFilters.Filters.Model.*;
+import com.salverrs.GEFilters.Filters.Model.InventorySetups.InventorySetup;
+import com.salverrs.GEFilters.Filters.Model.InventorySetups.InventorySetupsItem;
+import joptsimple.internal.Strings;
 import lombok.Value;
+
 import javax.annotation.Nullable;
 import java.awt.*;
 import java.util.ArrayList;
@@ -23,15 +26,17 @@ public class InventorySetupSerializable
     @Nullable
     List<InventorySetupItemSerializable> bp;	// bolt pouch (null = No bp)
     @Nullable
-    Map<Integer, InventorySetupItemSerializable> afi;	    // additional filtered items (null = No afi)
-    String name;    // name of setup
+    List<InventorySetupItemSerializable> qv;	// quiver (null = No qv)
     @Nullable
-    String notes;   // notes (null = empty notes)
+    Map<Integer, InventorySetupItemSerializable> afi;		// additional filtered items (null = No afi)
+    String name;	// name of setup
+    @Nullable
+    String notes;	// notes (null = empty notes)
     Color hc; 		// highlight color
     @Nullable
-    Boolean hd;     // highlight difference (null = false)
+    Boolean hd;		// highlight difference (null = false)
     @Nullable
-    Color dc;       // display color (null = no color)
+    Color dc;		// display color (null = no color)
     @Nullable
     Boolean fb;		// filter bank (null = false)
     @Nullable
@@ -50,9 +55,10 @@ public class InventorySetupSerializable
         List<InventorySetupItemSerializable> eq = convertListFromInventorySetup(inventorySetup.getEquipment());
         List<InventorySetupItemSerializable> rp = convertListFromInventorySetup(inventorySetup.getRune_pouch());
         List<InventorySetupItemSerializable> bp = convertListFromInventorySetup(inventorySetup.getBoltPouch());
+        List<InventorySetupItemSerializable> qv = convertListFromInventorySetup(inventorySetup.getQuiver());
 
         Map<Integer, InventorySetupItemSerializable> afi = null;
-        if (!inventorySetup.getAdditionalFilteredItems().isEmpty())
+        if (inventorySetup.getAdditionalFilteredItems() != null && !inventorySetup.getAdditionalFilteredItems().isEmpty())
         {
             afi = new HashMap<>();
             for (final Integer key : inventorySetup.getAdditionalFilteredItems().keySet())
@@ -62,7 +68,7 @@ public class InventorySetupSerializable
         }
 
         String name = inventorySetup.getName();
-        String notes = !inventorySetup.getNotes().isEmpty() ? inventorySetup.getNotes() : null;
+        String notes = !Strings.isNullOrEmpty(inventorySetup.getNotes()) ? inventorySetup.getNotes() : null;
         Color hc = inventorySetup.getHighlightColor();
         Boolean hd = inventorySetup.isHighlightDifference() ? Boolean.TRUE : null;
         Color dc = inventorySetup.getDisplayColor();
@@ -72,7 +78,7 @@ public class InventorySetupSerializable
         Boolean fv = inventorySetup.isFavorite() ? Boolean.TRUE : null;
         Integer iId = inventorySetup.getIconID() > 0 ? inventorySetup.getIconID() : null;
 
-        return new InventorySetupSerializable(inv, eq, rp, bp, afi, name, notes, hc, hd, dc, fb, uh, sb, fv, iId);
+        return new InventorySetupSerializable(inv, eq, rp, bp, qv, afi, name, notes, hc, hd, dc, fb, uh, sb, fv, iId);
     }
 
     static private List<InventorySetupItemSerializable> convertListFromInventorySetup(final List<InventorySetupsItem> items)
@@ -112,6 +118,7 @@ public class InventorySetupSerializable
         List<InventorySetupsItem> eq = convertListToInventorySetup(iss.getEq());
         List<InventorySetupsItem> rp = convertListToInventorySetup(iss.getRp());
         List<InventorySetupsItem> bp = convertListToInventorySetup(iss.getBp());
+        List<InventorySetupsItem> qv = convertListToInventorySetup(iss.getQv());
         Map<Integer, InventorySetupsItem> afi = new HashMap<>();
         if (iss.getAfi() != null)
         {
@@ -131,7 +138,7 @@ public class InventorySetupSerializable
         boolean fv = iss.getFv() != null ? iss.getFv() : Boolean.FALSE;
         int iId = iss.getIId() != null ? iss.getIId() : -1;
 
-        return new InventorySetup(inv, eq, rp, bp, afi, name, notes, hc, hd, dc, fb, uh, sb, fv, iId);
+        return new InventorySetup(inv, eq, rp, bp, qv, afi, name, notes, hc, hd, dc, fb, uh, sb, fv, iId);
     }
 
 

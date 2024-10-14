@@ -33,7 +33,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @AllArgsConstructor
-public class InventorySetup
+public class InventorySetup implements InventorySetupsDisplayAttributes
 {
     @Getter
     private List<InventorySetupsItem> inventory;
@@ -46,6 +46,9 @@ public class InventorySetup
 
     @Getter
     private List<InventorySetupsItem> boltPouch;
+
+    @Getter
+    private List<InventorySetupsItem> quiver;
 
     @Getter
     private Map<Integer, InventorySetupsItem> additionalFilteredItems;
@@ -84,6 +87,7 @@ public class InventorySetup
         2 = Lunar
         3 = Arceuus
         4 = NONE
+
         Avoiding Enum because won't work well with GSON (defaults to null)
     */
     @Getter
@@ -116,6 +120,11 @@ public class InventorySetup
     public void updateBoltPouch(final List<InventorySetupsItem> bp)
     {
         boltPouch = bp;
+    }
+
+    public void updateQuiver(final List<InventorySetupsItem> q)
+    {
+        quiver = q;
     }
 
     public void updateAdditionalItems(final Map<Integer, InventorySetupsItem> ai)

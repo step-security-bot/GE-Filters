@@ -129,7 +129,7 @@ public class RecentItemsSearchFilter extends SearchFilter {
 
     private void addItemFilterResults(ArrayList<Short> items)
     {
-        if (items == null || items.size() == 0)
+        if (items == null || items.isEmpty())
             return;
 
         final short[] itemIds = FilterUtility.getPrimitiveShortArray(items);
@@ -178,14 +178,14 @@ public class RecentItemsSearchFilter extends SearchFilter {
     private ArrayList<Short> loadItemIdsFromConfig(String configKey)
     {
         final String itemsJson = configManager.getConfiguration(GEFiltersPlugin.CONFIG_GROUP_DATA, configKey);
-        if (itemsJson == null || itemsJson.equals(""))
+        if (itemsJson == null || itemsJson.isEmpty())
         {
             return new ArrayList<Short>();
         }
         else
         {
             final Short[] recentItems = GSON.fromJson(itemsJson, Short[].class);
-            return new ArrayList(Arrays.asList(recentItems));
+            return new ArrayList<>(Arrays.asList(recentItems));
         }
     }
 

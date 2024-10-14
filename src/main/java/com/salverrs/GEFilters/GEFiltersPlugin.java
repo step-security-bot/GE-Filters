@@ -37,6 +37,7 @@ public class GEFiltersPlugin extends Plugin
 	public static final String BANK_TAGS_COMP_NAME = "Bank Tags";
 	private static final String SEARCH_BUY_PREFIX = "What would you like to buy?";
 	public static final String INVENTORY_SETUPS_COMP_NAME = "Inventory Setups";
+	private static final int WIDGET_ID_CHATBOX_GE_SEARCH_RESULTS = 10616882;
 	private static final int SEARCH_BOX_LOADED_ID = 750;
 	private static final int SEARCH_STRING_APPEND_ID = 222;
 
@@ -78,10 +79,7 @@ public class GEFiltersPlugin extends Plugin
 	protected void shutDown() throws Exception
 	{
 		log.info("GE Filters stopped!");
-		clientThread.invoke(() ->
-		{
-			stopFilters();
-		});
+		clientThread.invoke(this::stopFilters);
 	}
 
 	@Subscribe
@@ -89,10 +87,7 @@ public class GEFiltersPlugin extends Plugin
 	{
 		if (event.getScriptId() == SEARCH_BOX_LOADED_ID)
 		{
-			clientThread.invoke(() ->
-			{
-				tryStartFilters();
-			});
+			clientThread.invoke(this::tryStartFilters);
 		}
 	}
 
@@ -213,7 +208,7 @@ public class GEFiltersPlugin extends Plugin
 
 	private boolean isSearchVisible()
 	{
-		final Widget widget = client.getWidget(WidgetInfo.CHATBOX_GE_SEARCH_RESULTS);
+		final Widget widget = client.getWidget(WIDGET_ID_CHATBOX_GE_SEARCH_RESULTS);
 		return widget != null && !widget.isHidden();
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, dillydill123 <https://github.com/dillydill123>
+ * Copyright (c) 2022, dillydill123 <https://github.com/dillydill123>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,49 +22,15 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package com.salverrs.GEFilters.Filters.Model.InventorySetups;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import java.awt.Color;
 
-@AllArgsConstructor
-public class InventorySetupsItem
+public interface InventorySetupsDisplayAttributes
 {
-    @Getter
-    private final int id;
-    @Getter
-    @Setter
-    private String name;
-    @Getter
-    @Setter
-    private int quantity;
-    @Getter
-    @Setter
-    private boolean fuzzy;
-    @Getter
-    @Setter
-    private InventorySetupsStackCompareID stackCompare;
-
-    public void toggleIsFuzzy()
-    {
-        fuzzy = !fuzzy;
-    }
-
-    public static InventorySetupsItem getDummyItem()
-    {
-        return new InventorySetupsItem(-1, "", 0, false, InventorySetupsStackCompareID.None);
-    }
-
-    public static boolean itemIsDummy(final InventorySetupsItem item)
-    {
-        // Don't use the name to compare
-        return item.getId() == -1 &&
-                item.getQuantity() == 0 &&
-                !item.isFuzzy() &&
-                (item.getStackCompare() == InventorySetupsStackCompareID.None || item.getStackCompare() == null);
-    }
-
+    String getName();
+    void setName(final String name);
+    Color getDisplayColor();
+    void setDisplayColor(final Color color);
 }

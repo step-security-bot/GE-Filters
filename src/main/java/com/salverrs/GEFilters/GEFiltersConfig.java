@@ -115,11 +115,20 @@ public interface GEFiltersConfig extends Config
 	default boolean enableInvSetupsBoltPouch() { return true; }
 
 	@ConfigItem(
+			keyName = "enableInvSetupsQuiver",
+			name = "Quiver",
+			description = "Show Quiver ammo in the Inventory Setups filter.",
+			section = inventorySetupsSection,
+			position = 8
+	)
+	default boolean enableInvSetupsQuiver() { return true; }
+
+	@ConfigItem(
 			keyName = "enableInvSetupsAdditionalItems",
 			name = "Additional Filtered Items",
 			description = "Show additional filtered items the Inventory Setups filter.",
 			section = inventorySetupsSection,
-			position = 8
+			position = 9
 	)
 	default boolean enableInvSetupsAdditionalItems() { return true; }
 
@@ -128,7 +137,7 @@ public interface GEFiltersConfig extends Config
 			name = "Filter Title Colour",
 			description = "The text colour for filter titles.",
 			section = preferencesSection,
-			position = 9
+			position = 10
 	)
 	default Color filterTitleColour()
 	{
@@ -141,7 +150,7 @@ public interface GEFiltersConfig extends Config
 			name = "Typing Overrides Active Filter",
 			description = "When enabled typing will override the currently active filter and perform a regular search.",
 			section = preferencesSection,
-			position = 10
+			position = 11
 	)
 	default boolean keyPressOverridesFilter()
 	{
@@ -153,7 +162,7 @@ public interface GEFiltersConfig extends Config
 			name = "Hide Default Search Prefix",
 			description = "Hide 'What would you like to buy?' from GE searches.",
 			section = preferencesSection,
-			position = 11
+			position = 12
 	)
 	default boolean hideSearchPrefix()
 	{
@@ -169,7 +178,7 @@ public interface GEFiltersConfig extends Config
 			name = "Horizontal Spacing",
 			description = "The horizontal space between filter buttons (px).",
 			section = preferencesSection,
-			position = 12
+			position = 13
 	)
 	default int filterHorizontalSpacing()
 	{

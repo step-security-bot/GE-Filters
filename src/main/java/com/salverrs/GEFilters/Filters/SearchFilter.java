@@ -37,6 +37,10 @@ public abstract class SearchFilter
     private static final int KEY_PRESS_SCRIPT_ID = 905;
     private static final int ICON_BG_SIZE_OFFSET = 6;
     private static final int ICON_BG_POS_OFFSET = 3;
+    private static final int WIDGET_ID_CHATBOX_GE_SEARCH_RESULTS = 10616882;
+    private static final int WIDGET_ID_CHATBOX_CONTAINER = 10616869;
+    private static final int WIDGET_ID_CHATBOX_TITLE = 10616873;
+    private static final int WIDGET_ID_CHATBOX_FULL_INPUT = 10616874;
     private boolean qhEnabled;
     private Widget container;
     private Widget iconWidget;
@@ -301,7 +305,7 @@ public abstract class SearchFilter
 
     protected void setSearchResultsHidden(boolean hidden)
     {
-        final Widget resultsContainer = client.getWidget(WidgetInfo.CHATBOX_GE_SEARCH_RESULTS);
+        final Widget resultsContainer = client.getWidget(WIDGET_ID_CHATBOX_GE_SEARCH_RESULTS);
         if (resultsContainer != null)
         {
             resultsContainer.setHidden(hidden);
@@ -463,7 +467,7 @@ public abstract class SearchFilter
 
     private boolean isChatInputHidden()
     {
-        final Widget widget = client.getWidget(WidgetInfo.CHATBOX_CONTAINER);
+        final Widget widget = client.getWidget(WIDGET_ID_CHATBOX_CONTAINER);
         return widget == null || widget.isHidden();
     }
 
@@ -472,14 +476,14 @@ public abstract class SearchFilter
         if (isChatInputHidden())
             return false;
 
-        final Widget title = client.getWidget(WidgetInfo.CHATBOX_TITLE);
+        final Widget title = client.getWidget(WIDGET_ID_CHATBOX_TITLE);
         return title != null && title.isHidden();
     }
 
     private void createWidgets(int xOffset, int yOffset)
     {
-        container = client.getWidget(WidgetInfo.CHATBOX_CONTAINER);
-        searchBoxWidget = client.getWidget(WidgetInfo.CHATBOX_FULL_INPUT);
+        container = client.getWidget(WIDGET_ID_CHATBOX_CONTAINER);
+        searchBoxWidget = client.getWidget(WIDGET_ID_CHATBOX_FULL_INPUT);
         titleWidget = createTitleWidget();
         backgroundWidget = createGraphicWidget(SpriteID.UNKNOWN_BUTTON_SQUARE_SMALL, ICON_SIZE, ICON_SIZE, xOffset, yOffset);
         iconWidget = createGraphicWidget(
@@ -508,7 +512,7 @@ public abstract class SearchFilter
 
     private Widget createTitleWidget()
     {
-        final Widget chatBoxWidget = client.getWidget(WidgetInfo.CHATBOX_FULL_INPUT);
+        final Widget chatBoxWidget = client.getWidget(WIDGET_ID_CHATBOX_FULL_INPUT);
         final Widget widget = container.createChild(-1, WidgetType.TEXT);
 
         if (chatBoxWidget == null)
