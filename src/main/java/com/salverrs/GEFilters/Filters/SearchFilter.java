@@ -6,9 +6,8 @@ import com.salverrs.GEFilters.Filters.Model.SearchState;
 import com.salverrs.GEFilters.GEFiltersConfig;
 import net.runelite.api.*;
 import net.runelite.api.events.*;
+import net.runelite.api.widgets.InterfaceID;
 import net.runelite.api.widgets.Widget;
-import net.runelite.api.widgets.WidgetID;
-import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.api.widgets.WidgetType;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
@@ -107,7 +106,7 @@ public abstract class SearchFilter
     @Subscribe
     public void onWidgetClosed(WidgetClosed event)
     {
-        if (event.getGroupId() == WidgetID.GRAND_EXCHANGE_GROUP_ID)
+        if (event.getGroupId() == InterfaceID.GRAND_EXCHANGE)
         {
             disableFilter(true);
         }
