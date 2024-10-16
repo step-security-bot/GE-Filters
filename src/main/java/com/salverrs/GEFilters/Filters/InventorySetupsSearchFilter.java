@@ -1,32 +1,26 @@
 package com.salverrs.GEFilters.Filters;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import javax.inject.Inject;
 import com.salverrs.GEFilters.Filters.Model.FilterOption;
 import com.salverrs.GEFilters.Filters.Model.GeSearch;
 import com.salverrs.GEFilters.Filters.Model.GeSearchResultWidget;
 import com.salverrs.GEFilters.GEFiltersConfig;
 import com.salverrs.GEFilters.GEFiltersPlugin;
-import joptsimple.internal.Strings;
 import lombok.Getter;
 import net.runelite.api.*;
 import net.runelite.api.events.ClientTick;
 import net.runelite.api.events.WidgetClosed;
 import net.runelite.api.events.WidgetLoaded;
 import net.runelite.api.widgets.*;
-
-import java.lang.reflect.Type;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
-
 import com.salverrs.GEFilters.Filters.Model.InventorySetups.*;
 import com.salverrs.GEFilters.Filters.Model.InventorySetups.Serialization.*;
-import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
-import net.runelite.client.game.ItemManager;
+import net.runelite.client.events.ConfigChanged;
 
 public class InventorySetupsSearchFilter extends SearchFilter {
 
@@ -37,49 +31,43 @@ public class InventorySetupsSearchFilter extends SearchFilter {
     private static final String INV_SETUPS_MENU_IDENTIFIER_2 = "Open Section";
     private static final String SETUPS_EXCEPTION_JSON_KEY = "inventory-setups-exceptions";
     private static final int WIDGET_ID_CHATBOX_GE_SEARCH_RESULTS = 10616882;
+    private final GEFiltersConfig config;
     private FilterOption inventorySetupsFilter;
     private boolean bankOpen = false;
     private List<String> setupExceptions = new ArrayList<>();
-    private ArrayList<InventorySetup> inventorySetups = new ArrayList<>();
-    private ArrayList<InventorySetupsSection> setupSections = new ArrayList<>();
     private Gson gson;
-    private ItemManager itemManager;
-    private GEFiltersConfig config;
+    private List<InventorySetup> inventorySetups = new ArrayList<>();
+    private boolean initialLoad = true;
 
     @Getter
-    private InventorySetupsCache cache;
-
-    @Getter
-    private InventorySetupsPersistentDataManager dataManager;
+    private final InventorySetupsDataLoader dataManager;
 
     @Inject
-    public InventorySetupsSearchFilter(GEFiltersConfig config, ItemManager itemManager, ConfigManager configManager, ClientThread clientThread, Gson gson) {
+    public InventorySetupsSearchFilter(GEFiltersConfig config, ConfigManager configManager, Gson gson) {
         this.config = config;
-        this.itemManager = itemManager;
         this.gson = gson.newBuilder().registerTypeAdapter(long.class, new LongTypeAdapter()).create();
         this.gson = gson.newBuilder().registerTypeAdapter(InventorySetupItemSerializable.class, new InventorySetupItemSerializableTypeAdapter()).create();
-        this.cache = new InventorySetupsCache();
-        this.dataManager = new InventorySetupsPersistentDataManager(configManager, itemManager, cache, gson, inventorySetups, setupSections);
 
-        clientThread.invokeLater(() -> dataManager.loadConfig());
+        this.dataManager = new InventorySetupsDataLoader(configManager, gson);
     }
-
 
     @Override
     protected void onFilterInitialising()
     {
         inventorySetupsFilter = new FilterOption(TITLE_MAIN, SEARCH_BASE_MAIN);
-
         setFilterOptions(inventorySetupsFilter);
         setIconSprite(SPRITE_ID_MAIN, 0);
-
     }
 
     @Override
     protected void onFilterStarted()
     {
-        clientThread.invokeLater(() -> dataManager.loadConfig());
         loadSetupExceptions();
+
+        if (initialLoad) {
+            loadUpdatedInventorySetups();
+            initialLoad = false;
+        }
     }
 
     @Override
@@ -351,20 +339,15 @@ public class InventorySetupsSearchFilter extends SearchFilter {
 
     private InventorySetup getInventorySetup(String name)
     {
-        return Objects.requireNonNull(getInventorySetups()).stream().filter(s -> s.getName().equals(name)).findAny().orElse(null);
+        return Objects.requireNonNull(inventorySetups).stream().filter(s -> s.getName().equals(name)).findAny().orElse(null);
     }
 
     private Set<String> getInventorySetupNames()
     {
-        return Objects.requireNonNull(getInventorySetups()).stream()
+        return Objects.requireNonNull(inventorySetups).stream()
                 .map(InventorySetup::getName)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toCollection(TreeSet::new));
-    }
-
-    private List<InventorySetup> getInventorySetups()
-    {
-        return dataManager.getInventorySetups();
     }
 
     private List<Short> getSetupItemIds(List<InventorySetupsItem> items)
@@ -405,6 +388,21 @@ public class InventorySetupsSearchFilter extends SearchFilter {
 
         final short[] itemResultIds = FilterUtility.getPrimitiveShortArray(finalItems);
         setGESearchResults(itemResultIds);
+    }
+
+    private void loadUpdatedInventorySetups() {
+        if (dataManager == null || clientThread == null)
+            return;
+
+        clientThread.invokeLater(() -> inventorySetups = dataManager.getSetups());
+    }
+
+    @Subscribe
+    public void onConfigChanged(ConfigChanged configChanged)
+    {
+        if (configChanged.getGroup().equals(InventorySetupsDataLoader.CONFIG_GROUP)) {
+            loadUpdatedInventorySetups();
+        }
     }
 
 }

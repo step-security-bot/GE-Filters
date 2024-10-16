@@ -1,5 +1,6 @@
+// All credit to Inventory Setups maintainers - https://github.com/dillydill123/inventory-setups
 /*
- * Copyright (c) 2022, dillydill123 <https://github.com/dillydill123>
+ * Copyright (c) 2019, dillydill123 <https://github.com/dillydill123>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,6 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 package com.salverrs.GEFilters.Filters.Model.InventorySetups;
 
 

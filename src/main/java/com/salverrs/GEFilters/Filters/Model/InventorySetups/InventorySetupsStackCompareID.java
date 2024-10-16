@@ -1,3 +1,4 @@
+// All credit to Inventory Setups maintainers - https://github.com/dillydill123/inventory-setups
 /*
  * Copyright (c) 2019, dillydill123 <https://github.com/dillydill123>
  * All rights reserved.
