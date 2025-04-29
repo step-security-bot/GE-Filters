@@ -36,10 +36,10 @@ public abstract class SearchFilter
     private static final int KEY_PRESS_SCRIPT_ID = 905;
     private static final int ICON_BG_SIZE_OFFSET = 6;
     private static final int ICON_BG_POS_OFFSET = 3;
-    private static final int WIDGET_ID_CHATBOX_GE_SEARCH_RESULTS = 10616882;
-    private static final int WIDGET_ID_CHATBOX_CONTAINER = 10616869;
-    private static final int WIDGET_ID_CHATBOX_TITLE = 10616873;
-    private static final int WIDGET_ID_CHATBOX_FULL_INPUT = 10616874;
+    private static final int WIDGET_ID_CHATBOX_GE_SEARCH_RESULTS = 10616883;
+    private static final int WIDGET_ID_CHATBOX_CONTAINER = 10616870;
+    private static final int WIDGET_ID_CHATBOX_TITLE = 10616874;
+    private static final int WIDGET_ID_CHATBOX_FULL_INPUT = 10616875;
     private boolean qhEnabled;
     private Widget container;
     private Widget iconWidget;
