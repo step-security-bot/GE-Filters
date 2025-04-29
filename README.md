@@ -1,3 +1,7 @@
+[![Dependabot Updates](https://github.com/salverrs/GE-Filters/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/salverrs/GE-Filters/actions/workflows/dependabot/dependabot-updates)
+[![CodeQL](https://github.com/salverrs/GE-Filters/actions/workflows/codeql.yml/badge.svg)](https://github.com/salverrs/GE-Filters/actions/workflows/codeql.yml)
+[![Dependency Review](https://github.com/salverrs/GE-Filters/actions/workflows/dependency-review.yml/badge.svg)](https://github.com/salverrs/GE-Filters/actions/workflows/dependency-review.yml)
+
 # GE Filters
 
 * ➕ Adds a set of filters to the Grand Exchange search interface. 
