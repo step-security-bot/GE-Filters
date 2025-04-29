@@ -36,7 +36,7 @@ public class GEFiltersPlugin extends Plugin
 	public static final String BANK_TAGS_COMP_NAME = "Bank Tags";
 	private static final String SEARCH_BUY_PREFIX = "What would you like to buy?";
 	public static final String INVENTORY_SETUPS_COMP_NAME = "Inventory Setups";
-	private static final int WIDGET_ID_CHATBOX_GE_SEARCH_RESULTS = 10616882;
+	private static final int WIDGET_ID_CHATBOX_GE_SEARCH_RESULTS = 10616883;
 	private static final int SEARCH_BOX_LOADED_ID = 750;
 	private static final int SEARCH_STRING_APPEND_ID = 222;
 
