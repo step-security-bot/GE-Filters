@@ -24,7 +24,7 @@ public class BankTabSearchFilter extends SearchFilter {
     private static final String SEARCH_BASE_MAIN = "bank-tags";
     private static final String TAG_TAB_MENU_IDENTIFIER = "Export tag tab";
     private static final String TAG_EXCEPTION_JSON_KEY = "bank-tags-exceptions";
-    private static final int WIDGET_ID_CHATBOX_GE_SEARCH_RESULTS = 10616882;
+    private static final int WIDGET_ID_CHATBOX_GE_SEARCH_RESULTS = 10616883;
     private boolean bankOpen = false;
     private FilterOption bankTabFilter;
     private List<String> tagExceptions = new ArrayList<>();

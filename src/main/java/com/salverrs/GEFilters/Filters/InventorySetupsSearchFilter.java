@@ -30,7 +30,7 @@ public class InventorySetupsSearchFilter extends SearchFilter {
     private static final String INV_SETUPS_MENU_IDENTIFIER = "Open setup";
     private static final String INV_SETUPS_MENU_IDENTIFIER_2 = "Open Section";
     private static final String SETUPS_EXCEPTION_JSON_KEY = "inventory-setups-exceptions";
-    private static final int WIDGET_ID_CHATBOX_GE_SEARCH_RESULTS = 10616882;
+    private static final int WIDGET_ID_CHATBOX_GE_SEARCH_RESULTS = 10616883;
     private final GEFiltersConfig config;
     private FilterOption inventorySetupsFilter;
     private boolean bankOpen = false;
